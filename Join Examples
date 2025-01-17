@@ -1,0 +1,33 @@
+Query to find the top 5 customers from the top 10 cities who’ve paid the highest total amounts.
+
+-- Step 1. Find Top 10 countries by customer count
+
+WITH Top_10_countries_cte AS (
+    SELECT 
+        country.country,
+        COUNT(customer.customer_id) AS customer_count
+    FROM customer
+    INNER JOIN address ON customer.address_id = address.address_id
+    INNER JOIN city ON address.city_id = city.city_id
+    INNER JOIN country ON city.country_id = country.country_id
+    GROUP BY country.country
+    ORDER BY customer_count DESC
+    LIMIT 10)
+
+-- Step 2. Find cities in the top 10 countries by total_paid_amount
+
+SELECT 
+    city.city, 
+    country.country,
+	SUM(amount) AS total_amount_paid
+FROM payment
+INNER JOIN customer ON payment.customer_id = customer.customer_id
+INNER JOIN address ON customer.address_id = address.address_id
+INNER JOIN city ON address.city_id = city.city_id
+INNER JOIN country ON city.country_id = country.country_id
+
+WHERE country.country IN (SELECT country FROM Top_10_countries_cte)
+GROUP BY city.city, country.country
+ORDER BY total_amount_paid DESC
+LIMIT 10;
+
