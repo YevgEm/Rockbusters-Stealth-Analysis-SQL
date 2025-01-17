@@ -1,0 +1,103 @@
+-- 1. Top 5 films by revenue
+WITH film_revenue_cte AS (
+    SELECT 
+        film.film_id,
+        film.title,
+        SUM(payment.amount) AS total_revenue
+    FROM payment
+    INNER JOIN rental ON payment.rental_id = rental.rental_id
+    INNER JOIN inventory ON rental.inventory_id = inventory.inventory_id
+    INNER JOIN film ON inventory.film_id = film.film_id
+    GROUP BY film.film_id
+)
+
+-- Retrieve the movies with the highest and lowest revenue
+SELECT 
+    title,
+    total_revenue
+FROM film_revenue_cte
+ORDER BY total_revenue DESC
+LIMIT 5;
+
+
+-- 2. WITH film_revenue_cte AS (
+    SELECT 
+        film.film_id,
+        film.title,
+        SUM(payment.amount) AS total_revenue
+    FROM payment
+    INNER JOIN rental ON payment.rental_id = rental.rental_id
+    INNER JOIN inventory ON rental.inventory_id = inventory.inventory_id
+    INNER JOIN film ON inventory.film_id = film.film_id
+    GROUP BY film.film_id
+)
+
+
+SELECT 
+    title,
+    total_revenue
+FROM film_revenue_cte
+ORDER BY total_revenue ASC
+LIMIT 5;
+
+
+
+-- 3. CTE to fetch film and category details
+WITH film_category_cte AS (
+    SELECT 
+        category.name AS category_name,
+        film.film_id
+    FROM category
+    INNER JOIN film_category ON category.category_id = film_category.category_id
+    INNER JOIN film ON film.film_id = film_category.film_id
+)
+
+-- Count the number of films per category
+SELECT 
+    category_name,
+    COUNT(film_id) AS film_count
+FROM film_category_cte
+GROUP BY category_name
+ORDER BY film_count DESC;
+
+
+
+-- 4. CTE to fetch country and address details
+WITH country_cte AS (
+    SELECT 
+        country.country AS country_name
+    FROM customer
+    INNER JOIN address ON customer.address_id = address.address_id
+    INNER JOIN city ON address.city_id = city.city_id
+    INNER JOIN country ON city.country_id = country.country_id
+)
+-- Select all countries
+SELECT DISTINCT country_name
+FROM country_cte;
+
+
+-- 5. Query to calculate summary statistics for numerical columns
+
+SELECT 	
+    	MIN(release_year) AS min_release_year,
+	MAX(release_year) AS max_release_year,
+	AVG(release_year) AS avg_release_year,
+	COUNT(release_year), 
+	MIN(rental_duration) AS min_rental_duration,
+	MAX(rental_duration) AS max_rental_duration,
+	AVG(rental_duration)AS avg_rental_duration, 
+	COUNT(rental_duration), 
+	MIN(rental_rate) AS min_rental_rate, 
+	MAX(rental_rate) AS max_rental_rate,
+	AVG(rental_rate) AS avg_rental_rate,
+	COUNT(rental_rate),
+	MIN(length) AS min_length, 
+	MAX(length) AS max_length, 
+	AVG(length) AS avg_length,
+	COUNT(length), 
+	MIN(replacement_cost) AS min_replacement_cost,
+	MAX(replacement_cost) AS max_replacement_cost,
+	AVG(replacement_cost) AS avg_replacement_cost,
+	COUNT(replacement_cost)
+FROM film;	
+	
