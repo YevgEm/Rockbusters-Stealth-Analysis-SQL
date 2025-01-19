@@ -36,4 +36,4 @@ View visualizations here: Visualizations on Tableau Public.
 ## **Visulizations**
 
 Take a look some visualizations to the project on [Tableau Public](https://public.tableau.com/app/profile/yevgeniya.em/viz/RockbustersStealthgeographicaldistribution/RockbustersDistribution)
-and the project presentation with key insights on [Canva](https://www.canva.com/design/DAGWcjgiqjg/RUV0XQ5-9Jpu4DOEstI9hA/view?utm_content=DAGWcjgiqjg&utm_campaign=designshare&utm_medium=link&utm_source=editor).
+and the project presentation with key insights on [Canva](https://www.canva.com/design/DAGWcjgiqjg/uHfg9lGjkStL7ANq0QXTJA/edit?utm_content=DAGWcjgiqjg&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton).
